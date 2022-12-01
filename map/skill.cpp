@@ -4736,12 +4736,6 @@ static TIMER_FUNC(skill_timerskill){
 						if (unit)
 							break;
 					}
-					if (unit && !status_isdead(target) && !status_isdead(src)) {
-						skill_delunit(unit); // Consume unit for next waterball
-						//Timer will continue and walkdelay set until target is dead, even if there is currently no line of sight
-						unit_set_walkdelay(src, tick, TIMERSKILL_INTERVAL, 1);
-						skill_addtimerskill(src, tick + TIMERSKILL_INTERVAL, target->id, skl->x, skl->y, skl->skill_id, skl->skill_lv, skl->type + 1, skl->flag);
-					}
 				}	// Fall through
 				case WZ_JUPITEL:
 					// Official behaviour is to hit as long as there is a line of sight, regardless of distance
@@ -15109,7 +15103,7 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 				break;
 			case WZ_WATERBALL:
 				//Check if there are cells that can be turned into waterball units
-				if (pc_isequipped(sd,35203) || !sd || map_getcell(src->m, ux, uy, CELL_CHKWATER)
+				if (!sd || map_getcell(src->m, ux, uy, CELL_CHKWATER)
 					|| (map_find_skill_unit_oncell(src, ux, uy, SA_DELUGE, NULL, 1)) != NULL || (map_find_skill_unit_oncell(src, ux, uy, NJ_SUITON, NULL, 1)) != NULL)
 					break; //Turn water, deluge or suiton into waterball cell
 				continue;
