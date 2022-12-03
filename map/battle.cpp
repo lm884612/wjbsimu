@@ -2160,7 +2160,7 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 		case W_1HAXE:
 		case W_2HAXE:
 			if((skill = pc_checkskill(sd,AM_AXEMASTERY)) > 0)
-				damage += (skill * 3);
+				damage += (skill * 12);
 			if((skill = pc_checkskill(sd,NC_TRAININGAXE)) > 0)
 				damage += (skill * 5);
 			break;
@@ -4135,7 +4135,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 #ifdef RENEWAL
 			skillratio += -100 + 50 + skill_lv * 150;
 #else
-			skillratio += 40 * skill_lv;
+			skillratio += 140 * skill_lv;
 #endif
 			break;
 		case RG_INTIMIDATE:

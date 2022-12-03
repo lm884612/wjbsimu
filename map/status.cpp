@@ -10850,7 +10850,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 = 5 * val1; // Matk% increase
 #else
 			val2 = 1; // Lasts 1 invocation
-			val3 = 10 * val1; // Matk% increase
+			val3 = 5 * val1; // Matk% increase
 			val4 = 0; // 0 = ready to be used, 1 = activated and running
 #endif
 			break;
