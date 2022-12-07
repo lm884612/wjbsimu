@@ -5341,6 +5341,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case ABR_BATTLE_BUSTER:
 	case ABR_DUAL_CANNON_FIRE:
 	case ABR_INFINITY_BUSTER:
+	case RG_BACKSTAP:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
@@ -5533,7 +5534,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		status_change_end(src, SC_BLADESTOP, INVALID_TIMER);
 		break;
 
-	case RG_BACKSTAP:
+	/*case RG_BACKSTAP:
 	    {
 			if (!check_distance_bl(src, bl, 0)) {
 #ifdef RENEWAL
@@ -5573,7 +5574,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			}
 		}
 		break; 
-
+		*/
 	case MO_FINGEROFFENSIVE:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		if (battle_config.finger_offensive_type && sd) {
@@ -12778,7 +12779,7 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 			if (tsc && tsc->option&OPTION_MADOGEAR)
 				return USESKILL_FAIL_TOTARGET;
 			break;
-		case RG_BACKSTAP:
+		/*case RG_BACKSTAP:
 			{
 #ifndef RENEWAL
 				uint8 dir = map_calc_dir(src,target->x,target->y), t_dir = unit_getdir(target);
@@ -12791,6 +12792,7 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 					return USESKILL_FAIL_MAX;
 			}
 			break;
+			*/
 		case PR_TURNUNDEAD:
 			{
 				struct status_data *tstatus = status_get_status_data(target);

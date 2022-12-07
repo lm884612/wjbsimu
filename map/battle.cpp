@@ -4127,7 +4127,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case RG_BACKSTAP:
 			if(sd && sd->status.weapon == W_BOW && battle_config.backstab_bow_penalty)
-				skillratio += (200 + 40 * skill_lv) / 2;
+				skillratio += 200 + 40 * skill_lv;
 			else
 				skillratio += 200 + 40 * skill_lv;
 			break;
