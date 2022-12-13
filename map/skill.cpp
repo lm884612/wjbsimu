@@ -4636,6 +4636,7 @@ static TIMER_FUNC(skill_timerskill){
 	struct skill_timerskill *skl;
 	struct skill_unit *unit = NULL;
 	int range;
+	struct map_session_data* sd = BL_CAST(BL_PC, src);
 
 	nullpo_ret(src);
 	nullpo_ret(ud);
@@ -4733,6 +4734,14 @@ static TIMER_FUNC(skill_timerskill){
 						int ux = skl->x + layout->dx[i];
 						int uy = skl->y + layout->dy[i];
 						unit = map_find_skill_unit_oncell(src, ux, uy, WZ_WATERBALL, NULL, 0);
+
+						if (src->type == BL_PC && pc_isequipped(sd, 35203) && unit && !status_isdead(target) && !status_isdead(src)) {
+							skill_delunit(unit); // Consume unit for next waterball
+							//Timer will continue and walkdelay set until target is dead, even if there is currently no line of sight
+							unit_set_walkdelay(src, tick, TIMERSKILL_INTERVAL, 1);
+							skill_addtimerskill(src, tick + TIMERSKILL_INTERVAL, target->id, skl->x, skl->y, skl->skill_id, skl->skill_lv, skl->type + 1, skl->flag);
+							break;
+						}
 						if (unit)
 							break;
 					}
@@ -15105,6 +15114,8 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 				break;
 			case WZ_WATERBALL:
 				//Check if there are cells that can be turned into waterball units
+				if(src->type==BL_PC && pc_isequipped(sd, 35203))
+					break;
 				if (!sd || map_getcell(src->m, ux, uy, CELL_CHKWATER)
 					|| (map_find_skill_unit_oncell(src, ux, uy, SA_DELUGE, NULL, 1)) != NULL || (map_find_skill_unit_oncell(src, ux, uy, NJ_SUITON, NULL, 1)) != NULL)
 					break; //Turn water, deluge or suiton into waterball cell
