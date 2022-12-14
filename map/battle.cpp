@@ -6835,6 +6835,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		s_ele = rnd()%ELE_ALL;
 
 	switch(skill_id) {
+		case WZ_WATERBALL:
+			if (src->type == BL_PC && pc_isequipped(sd, 35203))
+				if (status_get_attack_sc_element(src, status_get_sc(src)) != NULL || status_get_attack_sc_element(src, status_get_sc(src)) != 0)
+					s_ele = status_get_attack_sc_element(src, status_get_sc(src));
+			break;
 		case NPC_EARTHQUAKE:
 			s_ele = ELE_NEUTRAL;
 			break;
